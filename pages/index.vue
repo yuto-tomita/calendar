@@ -1,36 +1,19 @@
 <template>
   <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        share-schedule-app
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    <Calendar />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from '@vue/composition-api'
+import Calendar from '../components/Calendar/index.vue'
 
-export default Vue.extend({})
+export default defineComponent({
+  components: {
+    Calendar
+  }
+})
+
 </script>
 
 <style>
