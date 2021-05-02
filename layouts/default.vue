@@ -1,8 +1,20 @@
 <template>
   <div>
+    <Header />
     <Nuxt />
   </div>
 </template>
+
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import Header from '@/components/Header/index.vue'
+
+export default defineComponent({
+  components: {
+    Header
+  }
+})
+</script>
 
 <style>
 html {
@@ -23,7 +35,6 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
 *,
 *::before,
 *::after {

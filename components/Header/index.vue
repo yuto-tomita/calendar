@@ -1,5 +1,5 @@
 <template>
-  <header style="height: 100px" class="bg-blue-light">
+  <header style="height: 100px" class="bg-blue-light mb-10">
     ヘッダー
   </header>
 </template>
