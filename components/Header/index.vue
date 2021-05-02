@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <Header />
-  </div>
+  <header style="height: 100px" class="bg-blue-light">
+    ヘッダー
+  </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import Header from '@/components/Header/index.vue'
-
 export default defineComponent({
-  components: {
-    Header
-  }
+
 })
 </script>
+
+<style>
+
+</style>
