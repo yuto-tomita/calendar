@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import Calendar from '@/components/Calendar/index.vue'
+import Calendar from '~/components/Calendar.vue'
 
 export default defineComponent({
   components: {
