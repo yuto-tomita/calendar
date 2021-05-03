@@ -3,12 +3,12 @@
     <button @click="incrementMonth">
       click me
     </button>
-    {{ state.today }}
+    {{ state.formatDate }}
     <div class="grid grid-cols-7">
       <div v-for="week in state.weeks" :key="week">
         {{ week }}
       </div>
-      <div v-for="day in monthLength" :key="day">
+      <div v-for="day in monthLengthArray" :key="day">
         {{ day }}
       </div>
     </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@vue/composition-api'
+import { defineComponent, reactive, computed } from '@vue/composition-api'
 import moment from 'moment'
 
 export default defineComponent({
@@ -24,15 +24,22 @@ export default defineComponent({
     const state = reactive({
       year: moment().month(),
       month: moment().month(),
-      today: moment().format('YYYY-MM-DD'),
+      formatDate: moment().format('YYYY-MM-DD'),
       weeks: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     })
 
     const incrementMonth = () => {
-      state.today = moment(state.today).add(1, 'M').format('YYYY-MM-DD')
+      state.formatDate = moment(state.formatDate).add(1, 'M').format('YYYY-MM-DD')
     }
 
-    return { state, incrementMonth }
+    const monthLengthArray = computed(() => {
+      const arr = [...Array(moment(state.formatDate).daysInMonth())]
+      return arr.map((val, index) => {
+        return index + 1
+      })
+    })
+
+    return { state, incrementMonth, monthLengthArray }
   }
 })
 </script>
