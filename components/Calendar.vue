@@ -4,11 +4,12 @@
       click me
     </button>
     {{ state.formatDate }}
+    <br>
     <div class="grid grid-cols-7">
       <div v-for="week in state.weeks" :key="week">
         {{ week }}
       </div>
-      <div v-for="day in monthLengthArray" :key="day">
+      <div v-for="(day, week) in dayCells" :key="week">
         {{ day }}
       </div>
     </div>
@@ -22,24 +23,39 @@ import moment from 'moment'
 export default defineComponent({
   setup () {
     const state = reactive({
-      year: moment().month(),
       month: moment().month(),
       formatDate: moment().format('YYYY-MM-DD'),
-      weeks: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     })
 
     const incrementMonth = () => {
       state.formatDate = moment(state.formatDate).add(1, 'M').format('YYYY-MM-DD')
     }
 
-    const monthLengthArray = computed(() => {
-      const arr = [...Array(moment(state.formatDate).daysInMonth())]
-      return arr.map((val, index) => {
-        return index + 1
-      })
+    const dayCells = computed(() => {
+      // 日付を格納するために、一ヶ月の日数の分だけundefined要素が格納されている配列を作成
+      const dayLength = [...Array(moment(state.formatDate).daysInMonth())]
+      const selectMonthDayCells = dayLength.map((_, index) => index + 1)
+      return [...lastMonthCell(), ...selectMonthDayCells, ...nextMonthCell(dayLength)]
     })
 
-    return { state, incrementMonth, monthLengthArray }
+    function lastMonthCell () {
+      const dateNumber = Number(moment(state.formatDate).format('D'))
+      const weekNumber = moment(state.formatDate).subtract(dateNumber - 1, 'd').format('d')
+      const lastMonthFirstWeekDay = [...Array(Number(weekNumber))].map((_, index) => Number(moment(weekNumber).subtract(index + 1, 'd').format('D')))
+
+      return lastMonthFirstWeekDay.sort((a, b) => a - b)
+    }
+
+    function nextMonthCell (dayLength: string[]) {
+      const lastDay = `${moment(state.formatDate).format('YYYY-MM')}-${dayLength.length}`
+      const lastDayWeekNumber = moment(lastDay).format('d')
+      const remainingDays = 6 - Number(lastDayWeekNumber)
+
+      return [...Array(remainingDays)].map((_, index) => Number(moment(lastDay).add(index, 'd').format('D')))
+    }
+
+    return { state, incrementMonth, dayCells }
   }
 })
 </script>
