@@ -1,10 +1,12 @@
 <template>
   <div>
-    <button @click="incrementMonth">
-      click me
+    <button @click="decrementMonth">
+      ◀︎
     </button>
-    <Selectbox />
     {{ state.formatDate }}
+    <button @click="incrementMonth">
+      ▶︎
+    </button>
     <br>
     <div class="grid grid-cols-7">
       <div v-for="week in state.weeks" :key="week">
@@ -33,6 +35,10 @@ export default defineComponent({
       state.formatDate = moment(state.formatDate).add(1, 'M').format('YYYY-MM-DD')
     }
 
+    const decrementMonth = () => {
+      state.formatDate = moment(state.formatDate).subtract(1, 'M').format('YYYY-MM-DD')
+    }
+
     const dayCells = computed(() => {
       // 日付を格納するために、一ヶ月の日数の分だけundefined要素が格納されている配列を作成
       const dayLength = [...Array(moment(state.formatDate).daysInMonth())]
@@ -56,7 +62,7 @@ export default defineComponent({
       return [...Array(remainingDays)].map((_, index) => Number(moment(lastDay).add(index + 1, 'd').format('D')))
     }
 
-    return { state, incrementMonth, dayCells }
+    return { state, incrementMonth, dayCells, decrementMonth }
   }
 })
 </script>
