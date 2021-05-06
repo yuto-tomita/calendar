@@ -41,8 +41,6 @@ export default defineComponent({
     })
 
     function lastMonthCell () {
-      // bug: 先月週の最終日
-      // 選択されている月の始めの日
       const selectMonthStartDay = moment(state.formatDate).format('YYYY-MM-01')
       const weekNumber = Number(moment(selectMonthStartDay).format('d'))
       const lastMonthFirstWeekDay = [...Array(Number(weekNumber))].map((_, index) => Number(moment(selectMonthStartDay).subtract(index + 1, 'd').format('D')))
