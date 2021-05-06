@@ -1,19 +1,22 @@
 <template>
   <div>
-    <button @click="decrementMonth">
-      ◀︎
-    </button>
-    {{ state.formatDate }}
-    <button @click="incrementMonth">
-      ▶︎
-    </button>
+    <div>
+      <button @click="decrementMonth">
+        ◀︎
+      </button>
+      {{ state.formatDate }}
+      <button @click="incrementMonth">
+        ▶︎
+      </button>
+      <Selectbox />
+    </div>
     <br>
     <div class="grid grid-cols-7">
       <div v-for="week in state.weeks" :key="week">
         {{ week }}
       </div>
       <div v-for="(day, week) in dayCells" :key="week">
-        {{ day }}
+        {{ day.label }}
       </div>
     </div>
   </div>
@@ -23,11 +26,15 @@
 import { defineComponent, reactive, computed } from '@vue/composition-api'
 import moment from 'moment'
 
+interface CalendarObject {
+  label: number;
+  value: string
+}
+
 export default defineComponent({
   setup () {
     const state = reactive({
-      month: moment().month(),
-      formatDate: moment().format('YYYY-MM-DD'),
+      formatDate: moment().format('YYYY-MM'),
       weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     })
 
@@ -39,27 +46,44 @@ export default defineComponent({
       state.formatDate = moment(state.formatDate).subtract(1, 'M').format('YYYY-MM-DD')
     }
 
-    const dayCells = computed(() => {
+    const dayCells = computed((): CalendarObject[] => {
       // 日付を格納するために、一ヶ月の日数の分だけundefined要素が格納されている配列を作成
       const dayLength = [...Array(moment(state.formatDate).daysInMonth())]
-      const selectMonthDayCells = dayLength.map((_, index) => index + 1)
+      const selectMonthStartDay = moment(state.formatDate).format('YYYY-MM-01')
+      const selectMonthDayCells: CalendarObject[] = dayLength.map((_, index) => {
+        return {
+          label: index + 1,
+          value: moment(selectMonthStartDay).add(index, 'd').format('YYYY-MM-DD')
+        }
+      })
+
       return [...lastMonthCell(), ...selectMonthDayCells, ...nextMonthCell(dayLength)]
     })
 
-    function lastMonthCell () {
+    function lastMonthCell (): CalendarObject[] {
       const selectMonthStartDay = moment(state.formatDate).format('YYYY-MM-01')
       const weekNumber = Number(moment(selectMonthStartDay).format('d'))
-      const lastMonthFirstWeekDay = [...Array(Number(weekNumber))].map((_, index) => Number(moment(selectMonthStartDay).subtract(index + 1, 'd').format('D')))
+      const lastMonthFirstWeekDay: CalendarObject[] = [...Array(Number(weekNumber))].map((_, index) => {
+        return {
+          label: Number(moment(selectMonthStartDay).subtract(index + 1, 'd').format('D')),
+          value: moment(selectMonthStartDay).subtract(index + 1, 'd').format('YYYY-MM-DD')
+        }
+      })
 
-      return lastMonthFirstWeekDay.sort((a, b) => a - b)
+      return lastMonthFirstWeekDay.slice().sort((a, b) => a.label - b.label)
     }
 
-    function nextMonthCell (dayLength: string[]) {
+    function nextMonthCell (dayLength: string[]): CalendarObject[] {
       const lastDay = `${moment(state.formatDate).format('YYYY-MM')}-${dayLength.length}`
       const lastDayWeekNumber = moment(lastDay).format('d')
       const remainingDays = 6 - Number(lastDayWeekNumber)
 
-      return [...Array(remainingDays)].map((_, index) => Number(moment(lastDay).add(index + 1, 'd').format('D')))
+      return [...Array(remainingDays)].map((_, index) => {
+        return {
+          label: Number(moment(lastDay).add(index + 1, 'd').format('D')),
+          value: moment(lastDay).add(index + 1, 'd').format('YYYY-MM-DD')
+        }
+      })
     }
 
     return { state, incrementMonth, dayCells, decrementMonth }
