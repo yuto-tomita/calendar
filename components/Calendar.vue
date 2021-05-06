@@ -41,9 +41,11 @@ export default defineComponent({
     })
 
     function lastMonthCell () {
-      const dateNumber = Number(moment(state.formatDate).format('D'))
-      const weekNumber = moment(state.formatDate).subtract(dateNumber - 1, 'd').format('d')
-      const lastMonthFirstWeekDay = [...Array(Number(weekNumber))].map((_, index) => Number(moment(weekNumber).subtract(index + 1, 'd').format('D')))
+      // bug: 先月週の最終日
+      // 選択されている月の始めの日
+      const selectMonthStartDay = moment(state.formatDate).format('YYYY-MM-01')
+      const weekNumber = Number(moment(selectMonthStartDay).format('d'))
+      const lastMonthFirstWeekDay = [...Array(Number(weekNumber))].map((_, index) => Number(moment(selectMonthStartDay).subtract(index + 1, 'd').format('D')))
 
       return lastMonthFirstWeekDay.sort((a, b) => a - b)
     }
@@ -53,7 +55,7 @@ export default defineComponent({
       const lastDayWeekNumber = moment(lastDay).format('d')
       const remainingDays = 6 - Number(lastDayWeekNumber)
 
-      return [...Array(remainingDays)].map((_, index) => Number(moment(lastDay).add(index, 'd').format('D')))
+      return [...Array(remainingDays)].map((_, index) => Number(moment(lastDay).add(index + 1, 'd').format('D')))
     }
 
     return { state, incrementMonth, dayCells }
