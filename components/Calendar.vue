@@ -20,10 +20,10 @@
       </div>
     </div>
     <div v-if="state.selectStatus === 1">
-      <Week />
+      <Week :current-week="returnWeek" />
     </div>
     <div v-if="state.selectStatus === 0">
-      <Day />
+      <Day :display-day="returnToday" />
     </div>
   </div>
 </template>
@@ -67,10 +67,6 @@ export default defineComponent({
       state.formatDate = moment(state.formatDate).subtract(1, 'M').format('YYYY-MM')
     }
 
-    const test = (value: number) => {
-      console.log(value)
-    }
-
     const dayCells = computed((): CalendarObject[] => {
       // 日付を格納するために、一ヶ月の日数の分だけundefined要素が格納されている配列を作成
       const dayLength = [...Array(moment(state.formatDate).daysInMonth())]
@@ -111,7 +107,24 @@ export default defineComponent({
       })
     }
 
-    return { state, incrementMonth, dayCells, decrementMonth, test }
+    const returnToday = computed(() => moment().format('YYYY-MM-DD'))
+
+    const returnWeek = computed(() => {
+      const weekNumber = moment().format('d')
+      const sunday = moment().subtract(Number(weekNumber), 'd').format('YYYY-MM-DD')
+      return [...Array(7)].map((_, index) => {
+        return moment(sunday).add(index, 'd').format('MM-DD')
+      })
+    })
+
+    return {
+      state,
+      incrementMonth,
+      dayCells,
+      decrementMonth,
+      returnToday,
+      returnWeek
+    }
   }
 })
 </script>
