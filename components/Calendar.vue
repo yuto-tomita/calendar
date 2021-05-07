@@ -8,10 +8,11 @@
       <button @click="incrementMonth">
         ▶︎
       </button>
-      <Selectbox />
+      <Selectbox v-model="state.selectStatus" :data="state.status" />
+      {{ state.selectStatus }}
     </div>
     <br>
-    <div class="grid grid-cols-7">
+    <div v-if="state.selectStatus === 2" class="grid grid-cols-7">
       <div v-for="week in state.weeks" :key="week">
         {{ week }}
       </div>
@@ -35,15 +36,34 @@ export default defineComponent({
   setup () {
     const state = reactive({
       formatDate: moment().format('YYYY-MM'),
-      weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+      weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      selectStatus: 2,
+      status: [
+        {
+          label: 'day',
+          value: 0
+        },
+        {
+          label: 'week',
+          value: 1
+        },
+        {
+          label: 'month',
+          value: 2
+        }
+      ]
     })
 
     const incrementMonth = () => {
-      state.formatDate = moment(state.formatDate).add(1, 'M').format('YYYY-MM-DD')
+      state.formatDate = moment(state.formatDate).add(1, 'M').format('YYYY-MM')
     }
 
     const decrementMonth = () => {
-      state.formatDate = moment(state.formatDate).subtract(1, 'M').format('YYYY-MM-DD')
+      state.formatDate = moment(state.formatDate).subtract(1, 'M').format('YYYY-MM')
+    }
+
+    const test = (value: number) => {
+      console.log(value)
     }
 
     const dayCells = computed((): CalendarObject[] => {
@@ -86,7 +106,7 @@ export default defineComponent({
       })
     }
 
-    return { state, incrementMonth, dayCells, decrementMonth }
+    return { state, incrementMonth, dayCells, decrementMonth, test }
   }
 })
 </script>
