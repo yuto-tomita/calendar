@@ -9,7 +9,6 @@
         ▶︎
       </button>
       <Selectbox v-model="state.selectStatus" :data="state.status" />
-      {{ state.selectStatus }}
     </div>
     <br>
     <div v-if="state.selectStatus === 2" class="grid grid-cols-7">
@@ -19,6 +18,12 @@
       <div v-for="(day, week) in dayCells" :key="week">
         {{ day.label }}
       </div>
+    </div>
+    <div v-if="state.selectStatus === 1">
+      <Week />
+    </div>
+    <div v-if="state.selectStatus === 0">
+      <Day />
     </div>
   </div>
 </template>
