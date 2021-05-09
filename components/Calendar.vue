@@ -107,7 +107,7 @@ export default defineComponent({
       })
     }
 
-    const returnToday = computed(() => moment().format('YYYY-MM-DD'))
+    const returnToday = computed(() => moment().format('MM-DD'))
 
     const returnWeek = computed(() => {
       const weekNumber = moment().format('d')

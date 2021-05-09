@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div v-for="(day, index) in 7" :key="index">
+    <div v-for="(day, index) in 7" :key="index" class="flex-1">
       <Day :display-day="currentWeek[index]" />
     </div>
   </div>
