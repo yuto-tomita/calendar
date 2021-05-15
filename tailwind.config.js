@@ -7,6 +7,9 @@ module.exports = {
         light: '#BFDBFE',
         default: '#60A5FA',
         dark: '#3B82F6'
+      },
+      red: {
+        default: '#e3342f'
       }
     }
   },

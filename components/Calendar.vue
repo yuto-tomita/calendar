@@ -16,14 +16,16 @@
         {{ week }}
       </div>
       <div v-for="(day, week) in dayCells" :key="week">
-        {{ day.label }}
+        <div :class="{ 'text-red-default' : isToday(day) }">
+          {{ day.label }}
+        </div>
       </div>
     </div>
     <div v-if="state.selectStatus === 1">
-      <Week :current-week="returnWeek" />
+      <Week :current-week="returnWeek" :schedule="schedule" :today="today" />
     </div>
     <div v-if="state.selectStatus === 0">
-      <Day :display-day="returnToday" />
+      <Day :display-day="returnToday" :schedule="schedule" :today="today" />
     </div>
   </div>
 </template>
@@ -33,8 +35,14 @@ import { defineComponent, reactive, computed } from '@vue/composition-api'
 import moment from 'moment'
 
 interface CalendarObject {
-  label: number;
+  label: number
   value: string
+}
+
+interface Schedule {
+  date: string
+  startHour: number | string
+  endHour: number | string
 }
 
 export default defineComponent({
@@ -59,11 +67,17 @@ export default defineComponent({
       ]
     })
 
-    const incrementMonth = () => {
+    const schedule: Schedule = {
+      date: moment().format('YYYY-MM-DD'),
+      startHour: 13,
+      endHour: 15
+    }
+
+    const incrementMonth = (): void => {
       state.formatDate = moment(state.formatDate).add(1, 'M').format('YYYY-MM')
     }
 
-    const decrementMonth = () => {
+    const decrementMonth = (): void => {
       state.formatDate = moment(state.formatDate).subtract(1, 'M').format('YYYY-MM')
     }
 
@@ -117,13 +131,20 @@ export default defineComponent({
       })
     })
 
+    const today = moment().format('MM-DD')
+
+    const isToday = (day: CalendarObject) => day.value === moment().format('YYYY-MM-DD')
+
     return {
       state,
+      schedule,
       incrementMonth,
       dayCells,
       decrementMonth,
       returnToday,
-      returnWeek
+      returnWeek,
+      isToday,
+      today
     }
   }
 })

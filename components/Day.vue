@@ -1,6 +1,8 @@
 <template>
   <div>
-    {{ displayDay }}
+    <div :class="{ 'text-red-default': isToday() }">
+      {{ displayDay }}
+    </div>
     <div v-for="hour in hours" :key="hour.id">
       {{ hour.label }}
     </div>
@@ -14,9 +16,13 @@ export default defineComponent({
     displayDay: {
       type: String,
       required: true
+    },
+    today: {
+      type: String,
+      required: true
     }
   },
-  setup () {
+  setup (props) {
     const hours = computed(() => {
       return [...Array(24)].map((_, index) => {
         return {
@@ -26,7 +32,9 @@ export default defineComponent({
       })
     })
 
-    return { hours }
+    const isToday = () => props.today === props.displayDay
+
+    return { hours, isToday }
   }
 })
 </script>
