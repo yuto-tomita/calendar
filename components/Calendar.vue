@@ -50,7 +50,7 @@ export default defineComponent({
     const state = reactive({
       formatDate: moment().format('YYYY-MM'),
       weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      selectStatus: 2,
+      selectStatus: 1,
       status: [
         {
           label: 'day',
@@ -127,7 +127,7 @@ export default defineComponent({
       const weekNumber = moment().format('d')
       const sunday = moment().subtract(Number(weekNumber), 'd').format('YYYY-MM-DD')
       return [...Array(7)].map((_, index) => {
-        return moment(sunday).add(index, 'd').format('MM-DD')
+        return moment(sunday).add(index, 'd').format('YYYY-MM-DD')
       })
     })
 
