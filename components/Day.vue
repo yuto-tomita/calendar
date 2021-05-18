@@ -5,7 +5,11 @@
     </div>
     <div v-for="hour in hours" :key="hour.id" class="flex">
       <div>{{ hour.label }}</div>
-      <div>{{ returnSchedule(hour) }}</div>
+      <div :class="returnSchedule(hour)">
+        <div v-if="isExistSchedule(hour)">
+          {{ schedule.schedule }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -16,7 +20,8 @@ import { defineComponent, computed, PropType } from '@vue/composition-api'
 interface Schedule {
   date: string
   startHour: number
-  endHour: number
+  endHour: number,
+  schedule: string
 }
 
 interface Hour {
@@ -52,14 +57,20 @@ export default defineComponent({
     const isToday = () => props.today === props.displayDay
 
     const isSameScheduleDay = () => props.schedule.date === props.displayDay
-    // const scheduleHours = props.schedule.endHour - props.schedule.startHour
+
     const returnSchedule = (hour: Hour) => {
-      if ((props.schedule.startHour <= hour.id) && (hour.id <= props.schedule.endHour) && isSameScheduleDay()) {
-        return 'hoge'
+      if (props.schedule.startHour === hour.id && isSameScheduleDay()) {
+        return 'border-t-2 border-r-2 border-l-2'
+      } else if (props.schedule.endHour === hour.id && isSameScheduleDay()) {
+        return 'border-b-2 border-r-2 border-l-2'
+      } else if ((props.schedule.startHour <= hour.id) && (hour.id <= props.schedule.endHour) && isSameScheduleDay()) {
+        return 'border-r-2 border-l-2'
       }
     }
 
-    return { hours, isToday, returnSchedule }
+    const isExistSchedule = (hour: Hour) => (props.schedule.startHour <= hour.id) && (hour.id <= props.schedule.endHour) && isSameScheduleDay()
+
+    return { hours, isToday, returnSchedule, isExistSchedule }
   }
 })
 </script>

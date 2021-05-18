@@ -8,7 +8,7 @@
       <button @click="incrementMonth">
         ▶︎
       </button>
-      <Selectbox v-model="state.selectStatus" :data="state.status" />
+      <!-- <Selectbox v-model="state.selectStatus" :data="state.status" /> -->
     </div>
     <br>
     <div v-if="state.selectStatus === 2" class="grid grid-cols-7">
@@ -21,12 +21,12 @@
         </div>
       </div>
     </div>
-    <div v-if="state.selectStatus === 1">
+    <!-- <div v-if="state.selectStatus === 1">
       <Week :current-week="returnWeek" :schedule="schedule" :today="today" />
     </div>
     <div v-if="state.selectStatus === 0">
       <Day :display-day="returnToday" :schedule="schedule" :today="today" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -43,6 +43,7 @@ interface Schedule {
   date: string
   startHour: number | string
   endHour: number | string
+  schedule: string
 }
 
 export default defineComponent({
@@ -50,7 +51,7 @@ export default defineComponent({
     const state = reactive({
       formatDate: moment().format('YYYY-MM'),
       weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      selectStatus: 1,
+      selectStatus: 2,
       status: [
         {
           label: 'day',
@@ -70,7 +71,8 @@ export default defineComponent({
     const schedule: Schedule = {
       date: moment().format('YYYY-MM-DD'),
       startHour: 13,
-      endHour: 15
+      endHour: 15,
+      schedule: 'ショッピング'
     }
 
     const incrementMonth = (): void => {

@@ -12,7 +12,8 @@ import { defineComponent, PropType } from '@vue/composition-api'
 interface Schedule {
   date: string
   startHour: number | string
-  endHour: number | string
+  endHour: number | string,
+  schedule: string
 }
 
 export default defineComponent({
