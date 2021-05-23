@@ -26,7 +26,9 @@
         }"
       >
         <div :class="{ 'text-red-default' : isToday(day) }" class="text-center">
-          {{ day.label }}
+          <span class="rounded-full transition duration-500 ease-in-out cursor-pointer inline-block w-6 h-6 hover:bg-grey-light">
+            {{ day.label }}
+          </span>
         </div>
         <div v-for="event in schedule" :key="event.event">
           <MonthEvent v-if="event.date === day.value" :schedule="event" />
