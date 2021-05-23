@@ -4,15 +4,15 @@
       <button @click="decrementMonth">
         ◀︎
       </button>
-      {{ state.formatDate }}
+      {{ monthState }}
       <button @click="incrementMonth">
         ▶︎
       </button>
-      <!-- <Selectbox v-model="state.selectStatus" :data="state.status" /> -->
+      <!-- <Selectbox v-model="selectStatus" :data="state.status" /> -->
     </div>
     <br>
-    <div v-if="state.selectStatus === 2" class="grid grid-cols-7">
-      <div v-for="week in state.weeks" :key="week" class="m-auto">
+    <div v-if="selectStatus === 2" class="grid grid-cols-7">
+      <div v-for="week in weeks" :key="week" class="m-auto">
         {{ week }}
       </div>
       <div
@@ -30,17 +30,17 @@
         </div>
       </div>
     </div>
-    <!-- <div v-if="state.selectStatus === 1">
+    <!-- <div v-if="selectStatus === 1">
       <Week :current-week="returnWeek" :schedule="schedule" :today="today" />
     </div>
-    <div v-if="state.selectStatus === 0">
+    <div v-if="selectStatus === 0">
       <Day :display-day="returnToday" :schedule="schedule" :today="today" />
     </div> -->
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from '@vue/composition-api'
+import { defineComponent, computed, ref } from '@vue/composition-api'
 import moment from 'moment'
 
 interface CalendarObject {
@@ -55,27 +55,31 @@ interface Schedule {
   schedule: string
 }
 
+interface CalendarState {
+  label: string
+  value: number
+}
+
 export default defineComponent({
   setup () {
-    const state = reactive({
-      formatDate: moment().format('YYYY-MM'),
-      weeks: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      selectStatus: 2,
-      status: [
-        {
-          label: 'day',
-          value: 0
-        },
-        {
-          label: 'week',
-          value: 1
-        },
-        {
-          label: 'month',
-          value: 2
-        }
-      ]
-    })
+    const weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    const monthState = ref<string>(moment().format('YYYY-MM'))
+    const selectStatus = ref<number>(2)
+    const calendarState: CalendarState[] = [
+      {
+        label: 'day',
+        value: 0
+      },
+      {
+        label: 'week',
+        value: 1
+      },
+      {
+        label: 'month',
+        value: 2
+      }
+    ]
+    const today = moment().format('MM-DD')
 
     const schedule: Schedule = {
       date: moment().format('YYYY-MM-DD'),
@@ -85,17 +89,17 @@ export default defineComponent({
     }
 
     const incrementMonth = (): void => {
-      state.formatDate = moment(state.formatDate).add(1, 'M').format('YYYY-MM')
+      monthState.value = moment(monthState.value).add(1, 'M').format('YYYY-MM')
     }
 
     const decrementMonth = (): void => {
-      state.formatDate = moment(state.formatDate).subtract(1, 'M').format('YYYY-MM')
+      monthState.value = moment(monthState.value).subtract(1, 'M').format('YYYY-MM')
     }
 
     const dayCells = computed((): CalendarObject[] => {
       // 日付を格納するために、一ヶ月の日数の分だけundefined要素が格納されている配列を作成
-      const dayLength = [...Array(moment(state.formatDate).daysInMonth())]
-      const selectMonthStartDay = moment(state.formatDate).format('YYYY-MM-01')
+      const dayLength = [...Array(moment(monthState.value).daysInMonth())]
+      const selectMonthStartDay = moment(monthState.value).format('YYYY-MM-01')
       const selectMonthDayCells: CalendarObject[] = dayLength.map((_, index) => {
         return {
           label: index + 1,
@@ -107,7 +111,7 @@ export default defineComponent({
     })
 
     function lastMonthCell (): CalendarObject[] {
-      const selectMonthStartDay = moment(state.formatDate).format('YYYY-MM-01')
+      const selectMonthStartDay = moment(monthState.value).format('YYYY-MM-01')
       const weekNumber = Number(moment(selectMonthStartDay).format('d'))
       const lastMonthFirstWeekDay: CalendarObject[] = [...Array(Number(weekNumber))].map((_, index) => {
         return {
@@ -120,7 +124,7 @@ export default defineComponent({
     }
 
     function nextMonthCell (dayLength: string[]): CalendarObject[] {
-      const lastDay = `${moment(state.formatDate).format('YYYY-MM')}-${dayLength.length}`
+      const lastDay = `${moment(monthState.value).format('YYYY-MM')}-${dayLength.length}`
       const lastDayWeekNumber = moment(lastDay).format('d')
       const remainingDays = 6 - Number(lastDayWeekNumber)
 
@@ -142,16 +146,15 @@ export default defineComponent({
       })
     })
 
-    const today = moment().format('MM-DD')
-
     const isToday = (day: CalendarObject) => day.value === moment().format('YYYY-MM-DD')
-
-    const isCurrentMonth = (day: CalendarObject) => state.formatDate === moment(day.value).format('YYYY-MM')
-
+    const isCurrentMonth = (day: CalendarObject) => monthState.value === moment(day.value).format('YYYY-MM')
     const isTopRows = (index: number) => index < 7
 
     return {
-      state,
+      weeks,
+      selectStatus,
+      monthState,
+      calendarState,
       schedule,
       incrementMonth,
       dayCells,
