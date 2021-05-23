@@ -12,11 +12,11 @@
     </div>
     <br>
     <div v-if="state.selectStatus === 2" class="grid grid-cols-7">
-      <div v-for="week in state.weeks" :key="week">
+      <div v-for="week in state.weeks" :key="week" class="m-auto">
         {{ week }}
       </div>
-      <div v-for="(day, week) in dayCells" :key="week">
-        <div :class="{ 'text-red-default' : isToday(day) }">
+      <div v-for="(day, week) in dayCells" :key="week" class="border h-20">
+        <div :class="{ 'text-red-default' : isToday(day) }" class="ml-1">
           {{ day.label }}
         </div>
       </div>
