@@ -84,22 +84,23 @@ export default defineComponent({
         value: 2
       }
     ]
+    const schedule = ref<Schedule[]>(
+      [
+        {
+          date: moment().format('YYYY-MM-DD'),
+          startHour: 13,
+          endHour: 15,
+          event: 'ショッピング'
+        },
+        {
+          date: moment().format('YYYY-MM-DD'),
+          startHour: 15,
+          endHour: 17,
+          event: 'Meeting'
+        }
+      ]
+    )
     const today = moment().format('MM-DD')
-
-    const schedule: Schedule[] = [
-      {
-        date: moment().format('YYYY-MM-DD'),
-        startHour: 13,
-        endHour: 15,
-        event: 'ショッピング'
-      },
-      {
-        date: moment().format('YYYY-MM-DD'),
-        startHour: 15,
-        endHour: 17,
-        event: 'Meeting'
-      }
-    ]
 
     const incrementMonth = (): void => {
       monthState.value = moment(monthState.value).add(1, 'M').format('YYYY-MM')
