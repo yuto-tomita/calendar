@@ -29,9 +29,7 @@
           {{ day.label }}
         </div>
         <div v-for="event in schedule" :key="event.event">
-          <div v-if="event.date === day.value">
-            <MonthEvent :schedule="event" />
-          </div>
+          <MonthEvent v-if="event.date === day.value" :schedule="event" />
         </div>
       </div>
     </div>
