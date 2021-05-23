@@ -28,8 +28,10 @@
         <div :class="{ 'text-red-default' : isToday(day) }" class="text-center">
           {{ day.label }}
         </div>
-        <div v-if="day.value === schedule.date">
-          <MonthEvent :schedule="schedule" />
+        <div v-for="event in schedule" :key="event.event">
+          <div v-if="event.date === day.value">
+            <MonthEvent :schedule="event" />
+          </div>
         </div>
       </div>
     </div>
@@ -84,12 +86,20 @@ export default defineComponent({
     ]
     const today = moment().format('MM-DD')
 
-    const schedule: Schedule = {
-      date: moment().format('YYYY-MM-DD'),
-      startHour: 13,
-      endHour: 15,
-      event: 'ショッピング'
-    }
+    const schedule: Schedule[] = [
+      {
+        date: moment().format('YYYY-MM-DD'),
+        startHour: 13,
+        endHour: 15,
+        event: 'ショッピング'
+      },
+      {
+        date: moment().format('YYYY-MM-DD'),
+        startHour: 15,
+        endHour: 17,
+        event: 'Meeting'
+      }
+    ]
 
     const incrementMonth = (): void => {
       monthState.value = moment(monthState.value).add(1, 'M').format('YYYY-MM')

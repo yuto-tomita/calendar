@@ -1,7 +1,9 @@
 <template>
-  <div class="bg-blue-default text-xs w-11/12 mt-1 rounded" style="color: white">
-    <div class="ml-4">
-      {{ schedule.event }}
+  <div>
+    <div class="bg-blue-default text-xs w-11/12 mt-1 rounded" style="color: white">
+      <div class="ml-4">
+        {{ schedule.event }}
+      </div>
     </div>
   </div>
 </template>
