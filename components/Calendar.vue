@@ -15,7 +15,16 @@
       <div v-for="week in state.weeks" :key="week" class="m-auto">
         {{ week }}
       </div>
-      <div v-for="(day, week) in dayCells" :key="week" class="h-20" :class="{'border' : isCurrentMonth(day), 'bg-grey-light' : !isCurrentMonth(day)}">
+      <div
+        v-for="(day, index) in dayCells"
+        :key="index"
+        class="h-20 border-grey-light"
+        :class="{
+          'border-b border-r' : isCurrentMonth(day),
+          'bg-grey-light' : !isCurrentMonth(day),
+          'border-t': isTopRows(index)
+        }"
+      >
         <div :class="{ 'text-red-default' : isToday(day) }" class="text-center">
           {{ day.label }}
         </div>
@@ -139,6 +148,8 @@ export default defineComponent({
 
     const isCurrentMonth = (day: CalendarObject) => state.formatDate === moment(day.value).format('YYYY-MM')
 
+    const isTopRows = (index: number) => index < 7
+
     return {
       state,
       schedule,
@@ -149,7 +160,8 @@ export default defineComponent({
       returnWeek,
       isToday,
       today,
-      isCurrentMonth
+      isCurrentMonth,
+      isTopRows
     }
   }
 })
