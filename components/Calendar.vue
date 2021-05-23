@@ -28,6 +28,9 @@
         <div :class="{ 'text-red-default' : isToday(day) }" class="text-center">
           {{ day.label }}
         </div>
+        <div v-if="day.value === schedule.date">
+          <MonthEvent :schedule="schedule" />
+        </div>
       </div>
     </div>
     <!-- <div v-if="selectStatus === 1">
@@ -52,7 +55,7 @@ interface Schedule {
   date: string
   startHour: number | string
   endHour: number | string
-  schedule: string
+  event: string
 }
 
 interface CalendarState {
@@ -85,7 +88,7 @@ export default defineComponent({
       date: moment().format('YYYY-MM-DD'),
       startHour: 13,
       endHour: 15,
-      schedule: 'ショッピング'
+      event: 'ショッピング'
     }
 
     const incrementMonth = (): void => {
