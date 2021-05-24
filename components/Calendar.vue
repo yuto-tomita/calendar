@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div>
-      <button @click="decrementMonth">
-        ◀︎
-      </button>
-      {{ monthState }}
-      <button @click="incrementMonth">
-        ▶︎
-      </button>
-      <!-- <Selectbox v-model="selectStatus" :data="state.status" /> -->
-    </div>
+    <button @click="decrementMonth">
+      ◀︎
+    </button>
+    {{ monthState }}
+    <button @click="incrementMonth">
+      ▶︎
+    </button>
+
+    <EventRegisterModal v-if="isModalOpen" :select-days="selectDays" />
+    <!-- <Selectbox v-model="selectStatus" :data="state.status" /> -->
     <br>
     <div v-if="selectStatus === 2" class="grid grid-cols-7">
       <div v-for="week in weeks" :key="week" class="m-auto">
@@ -26,7 +26,10 @@
         }"
       >
         <div :class="{ 'text-red-default' : isToday(day) }" class="text-center">
-          <span class="rounded-full transition duration-500 ease-in-out cursor-pointer inline-block w-6 h-6 hover:bg-grey-light">
+          <span
+            class="select-none rounded-full transition duration-500 ease-in-out cursor-pointer inline-block w-6 h-6 hover:bg-grey-light"
+            @click="changeModalStatus(day)"
+          >
             {{ day.label }}
           </span>
         </div>
@@ -70,6 +73,11 @@ export default defineComponent({
     const weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const monthState = ref<string>(moment().format('YYYY-MM'))
     const selectStatus = ref<number>(2)
+    const isModalOpen = ref<boolean>(false)
+    const selectDays = ref<CalendarObject>({
+      label: 0,
+      value: ''
+    })
     const calendarState: CalendarState[] = [
       {
         label: 'day',
@@ -164,6 +172,11 @@ export default defineComponent({
     const isCurrentMonth = (day: CalendarObject) => monthState.value === moment(day.value).format('YYYY-MM')
     const isTopRows = (index: number) => index < 7
 
+    const changeModalStatus = (day: CalendarObject) => {
+      selectDays.value = day
+      isModalOpen.value ? isModalOpen.value = false : isModalOpen.value = true
+    }
+
     return {
       weeks,
       selectStatus,
@@ -178,7 +191,10 @@ export default defineComponent({
       isToday,
       today,
       isCurrentMonth,
-      isTopRows
+      isTopRows,
+      isModalOpen,
+      selectDays,
+      changeModalStatus
     }
   }
 })
