@@ -18,16 +18,16 @@
       <div
         v-for="(day, index) in dayCells"
         :key="index"
-        class="h-20 border-grey-light"
+        class="h-20 border-gray-light"
         :class="{
           'border-b border-r' : isCurrentMonth(day),
-          'bg-grey-light' : !isCurrentMonth(day),
+          'bg-gray-light' : !isCurrentMonth(day),
           'border-t': isTopRows(index)
         }"
       >
         <div :class="{ 'text-red-default' : isToday(day) }" class="text-center">
           <span
-            class="select-none rounded-full transition duration-500 ease-in-out cursor-pointer inline-block w-6 h-6 hover:bg-grey-light"
+            class="select-none rounded-full transition duration-500 ease-in-out cursor-pointer inline-block w-6 h-6 hover:bg-gray-light"
             @click="changeModalStatus(day)"
           >
             {{ day.label }}

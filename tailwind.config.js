@@ -11,10 +11,13 @@ module.exports = {
       red: {
         default: '#e3342f'
       },
-      grey: {
+      gray: {
         light: '#BABABA',
         default: '#A8A7AC',
         dark: '#929199'
+      },
+      white: {
+        default: '#fff'
       }
     }
   },
