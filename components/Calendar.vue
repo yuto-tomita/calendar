@@ -8,7 +8,7 @@
       ▶︎
     </button>
 
-    <EventRegisterModal v-if="isModalOpen" :select-days="selectDays" />
+    <EventRegisterModal v-if="isModalOpen" :select-days="selectDays" @closeModal="isModalOpen = false" />
     <!-- <Selectbox v-model="selectStatus" :data="state.status" /> -->
     <br>
     <div v-if="selectStatus === 2" class="grid grid-cols-7">
@@ -174,7 +174,7 @@ export default defineComponent({
 
     const changeModalStatus = (day: CalendarObject) => {
       selectDays.value = day
-      isModalOpen.value ? isModalOpen.value = false : isModalOpen.value = true
+      isModalOpen.value = true
     }
 
     return {
