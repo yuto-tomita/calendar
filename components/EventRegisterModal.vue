@@ -4,10 +4,23 @@
       <div class="absolute right-5 cursor-pointer" @click="closeModal">
         ×
       </div>
-      <div class=" mr-20 mt-7">
+      <div class="mr-20 mt-7 ml-7">
+        <div class="font-medium mb-3">
+          {{ selectDays.value }}の予定
+        </div>
         <InputText v-model="event" label="予定" />
-        {{ selectDays }}
-        {{ event }}
+        <div class="flex w-full">
+          <Selectbox
+            v-model="selectStartHour"
+            label="予定時間"
+            :data="canSelectHours"
+          />
+          <!-- <Selectbox
+            v-model="selectEndHour"
+            label=""
+            :data="canSelectHours"
+          /> -->
+        </div>
       </div>
     </div>
   </div>
@@ -21,6 +34,11 @@ interface CalendarObject {
   value: string
 }
 
+interface Hours {
+  label: string
+  value: number
+}
+
 export default defineComponent({
   props: {
     selectDays: {
@@ -32,8 +50,37 @@ export default defineComponent({
   setup (_, { emit }) {
     const closeModal = () => emit('closeModal')
     const event = ref('')
+    const selectStartHour = ref()
+    const selectEndHour = ref()
+    const canSelectHours: Hours[] = [
+      { label: '0時', value: 0 },
+      { label: '1時', value: 1 },
+      { label: '2時', value: 2 },
+      { label: '3時', value: 3 },
+      { label: '4時', value: 4 },
+      { label: '5時', value: 5 },
+      { label: '6時', value: 6 },
+      { label: '7時', value: 7 },
+      { label: '8時', value: 8 },
+      { label: '9時', value: 9 },
+      { label: '10時', value: 10 },
+      { label: '11時', value: 11 },
+      { label: '12時', value: 12 },
+      { label: '13時', value: 13 },
+      { label: '14時', value: 14 },
+      { label: '15時', value: 15 },
+      { label: '16時', value: 16 },
+      { label: '17時', value: 17 },
+      { label: '18時', value: 18 },
+      { label: '19時', value: 19 },
+      { label: '20時', value: 20 },
+      { label: '21時', value: 21 },
+      { label: '22時', value: 22 },
+      { label: '23時', value: 23 },
+      { label: '24時', value: 24 }
+    ]
 
-    return { closeModal, event }
+    return { closeModal, event, canSelectHours, selectStartHour, selectEndHour }
   }
 })
 </script>
