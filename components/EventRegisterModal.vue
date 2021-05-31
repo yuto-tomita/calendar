@@ -4,7 +4,10 @@
       <div class="absolute right-5 cursor-pointer" @click="closeModal">
         ×
       </div>
-      {{ selectDays }}
+      <div class=" mr-20 mt-7">
+        <InputText label="予定" />
+        {{ selectDays }}
+      </div>
     </div>
   </div>
 </template>
