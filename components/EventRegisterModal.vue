@@ -5,15 +5,16 @@
         ×
       </div>
       <div class=" mr-20 mt-7">
-        <InputText label="予定" />
+        <InputText v-model="event" label="予定" />
         {{ selectDays }}
+        {{ event }}
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType, ref } from '@vue/composition-api'
 
 interface CalendarObject {
   label: number
@@ -30,8 +31,9 @@ export default defineComponent({
   emit: ['closeModal'],
   setup (_, { emit }) {
     const closeModal = () => emit('closeModal')
+    const event = ref('')
 
-    return { closeModal }
+    return { closeModal, event }
   }
 })
 </script>
