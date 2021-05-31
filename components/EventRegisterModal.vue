@@ -8,17 +8,19 @@
         <div class="font-medium mb-3">
           {{ selectDays.value }}の予定
         </div>
-        <InputText v-model="event" label="予定" />
+        <InputText v-model="schedule.event" label="予定" />
 
-        <Selectbox v-model="selectStartHour" :data="canSelectHours" label="開始時間" />
-        <Selectbox v-model="selectEndHour" :data="canSelectHours" label="終了時間" />
+        <Selectbox v-model="schedule.selectStartHour" :data="canSelectHours" label="開始時間" />
+        <Selectbox v-model="schedule.selectEndHour" :data="canSelectHours" label="終了時間" />
+
+        <Button label="日程登録" @click="saveSchedule" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from '@vue/composition-api'
+import { defineComponent, PropType, reactive } from '@vue/composition-api'
 
 interface CalendarObject {
   label: number
@@ -30,6 +32,13 @@ interface Hours {
   value: number
 }
 
+interface Schedule {
+  date: string
+  startHour: number | string
+  endHour: number | string
+  event: string
+}
+
 export default defineComponent({
   props: {
     selectDays: {
@@ -38,11 +47,14 @@ export default defineComponent({
     }
   },
   emit: ['closeModal'],
-  setup (_, { emit }) {
+  setup (props, { emit }) {
     const closeModal = () => emit('closeModal')
-    const event = ref('')
-    const selectStartHour = ref()
-    const selectEndHour = ref()
+    const schedule = reactive<Schedule>({
+      event: '',
+      startHour: 0,
+      endHour: 0,
+      date: props.selectDays.value
+    })
     const canSelectHours: Hours[] = [
       { label: '0時', value: 0 },
       { label: '1時', value: 1 },
@@ -71,7 +83,14 @@ export default defineComponent({
       { label: '24時', value: 24 }
     ]
 
-    return { closeModal, event, canSelectHours, selectStartHour, selectEndHour }
+    const saveSchedule = () => emit('saveSchedule', schedule)
+
+    return {
+      closeModal,
+      schedule,
+      canSelectHours,
+      saveSchedule
+    }
   }
 })
 </script>

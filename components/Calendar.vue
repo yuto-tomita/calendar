@@ -8,7 +8,7 @@
       ▶︎
     </button>
 
-    <EventRegisterModal v-if="isModalOpen" :select-days="selectDays" @closeModal="isModalOpen = false" />
+    <EventRegisterModal v-if="isModalOpen" :select-days="selectDays" @closeModal="isModalOpen = false" @saveSchedule="saveSchedule" />
     <!-- <Selectbox v-model="selectStatus" :data="state.status" /> -->
     <br>
     <div v-if="selectStatus === 2" class="grid grid-cols-7">
@@ -176,6 +176,10 @@ export default defineComponent({
       selectDays.value = day
       isModalOpen.value = true
     }
+    const saveSchedule = (emitValue: Schedule):void => {
+      schedule.value.push(emitValue)
+      isModalOpen.value = false
+    }
 
     return {
       weeks,
@@ -194,7 +198,8 @@ export default defineComponent({
       isTopRows,
       isModalOpen,
       selectDays,
-      changeModalStatus
+      changeModalStatus,
+      saveSchedule
     }
   }
 })
