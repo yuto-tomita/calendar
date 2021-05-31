@@ -13,7 +13,9 @@
         <Selectbox v-model="schedule.selectStartHour" :data="canSelectHours" label="開始時間" />
         <Selectbox v-model="schedule.selectEndHour" :data="canSelectHours" label="終了時間" />
 
-        <Button label="日程登録" @click="saveSchedule" />
+        <div class="text-right mt-10">
+          <Button label="日程登録" @click="saveSchedule" />
+        </div>
       </div>
     </div>
   </div>
