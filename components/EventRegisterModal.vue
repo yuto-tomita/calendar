@@ -9,18 +9,9 @@
           {{ selectDays.value }}の予定
         </div>
         <InputText v-model="event" label="予定" />
-        <div class="flex w-full">
-          <Selectbox
-            v-model="selectStartHour"
-            label="予定時間"
-            :data="canSelectHours"
-          />
-          <!-- <Selectbox
-            v-model="selectEndHour"
-            label=""
-            :data="canSelectHours"
-          /> -->
-        </div>
+
+        <Selectbox v-model="selectStartHour" :data="canSelectHours" label="開始時間" />
+        <Selectbox v-model="selectEndHour" :data="canSelectHours" label="終了時間" />
       </div>
     </div>
   </div>
