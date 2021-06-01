@@ -18,7 +18,7 @@
       <div
         v-for="(day, index) in dayCells"
         :key="index"
-        class="h-20 border-gray-light"
+        class="h-20 border-gray-light overflow-auto"
         :class="{
           'border-b border-r' : isCurrentMonth(day),
           'bg-gray-light' : !isCurrentMonth(day),
