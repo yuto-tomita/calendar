@@ -172,12 +172,12 @@ export default defineComponent({
     const isCurrentMonth = (day: CalendarObject) => monthState.value === moment(day.value).format('YYYY-MM')
     const isTopRows = (index: number) => index < 7
 
-    const changeModalStatus = (day: CalendarObject) => {
+    const changeModalStatus = (day: CalendarObject):void => {
       selectDays.value = day
       isModalOpen.value = true
     }
     const saveSchedule = (emitValue: Schedule):void => {
-      schedule.value.push(emitValue)
+      schedule.value = [...schedule.value, emitValue]
       isModalOpen.value = false
     }
 
