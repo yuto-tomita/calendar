@@ -9,6 +9,7 @@
     </button>
 
     <EventRegisterModal v-if="isModalOpen" :select-days="selectDays" @closeModal="isModalOpen = false" @saveSchedule="saveSchedule" />
+    <!-- <Dialog v-if="isDialog" @closeDialog="isDialog = false" /> -->
     <!-- <Selectbox v-model="selectStatus" :data="state.status" /> -->
     <br>
     <div v-if="selectStatus === 2" class="grid grid-cols-7">
@@ -33,7 +34,7 @@
             {{ day.label }}
           </span>
         </div>
-        <div v-for="event in schedule" :key="event.event">
+        <div v-for="(event, eventIndex) in schedule" :key="event.event" @click="openDialog(eventIndex)">
           <MonthEvent v-if="event.date === day.value" :schedule="event" />
         </div>
       </div>
@@ -108,6 +109,7 @@ export default defineComponent({
         }
       ]
     )
+    const isDialog = ref(false)
     const today = moment().format('MM-DD')
 
     const incrementMonth = (): void => {
@@ -180,6 +182,13 @@ export default defineComponent({
       schedule.value = [...schedule.value, emitValue]
       isModalOpen.value = false
     }
+    const openDialog = (eventIndex: number):void => {
+      const confirmDelete = confirm('予定を削除してもよろしいですか？')
+
+      if (confirmDelete) {
+        schedule.value = schedule.value.filter((_, val) => eventIndex !== val)
+      }
+    }
 
     return {
       weeks,
@@ -199,7 +208,9 @@ export default defineComponent({
       isModalOpen,
       selectDays,
       changeModalStatus,
-      saveSchedule
+      saveSchedule,
+      openDialog,
+      isDialog
     }
   }
 })
