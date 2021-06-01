@@ -50,7 +50,9 @@ export default {
   },
   buildDir: 'dist',
 
-  ssr: true,
+  ssr: false,
+
+  target: 'static',
 
   generate: {
     interval: 2000,
