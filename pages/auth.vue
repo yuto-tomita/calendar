@@ -3,7 +3,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from '@vue/composition-api'
+// import firebase from 'firebase/app'
+export default defineComponent({
 
-}
+})
 </script>
