@@ -1,6 +1,6 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 
-export const firebaseConfig = {
+const firebaseConfig = {
   apiKey: 'AIzaSyAqjuKbtr23H7v3Zh8OLazIWSZtY4AGHD0',
   authDomain: 'share-schedule-eee11.firebaseapp.com',
   projectId: 'share-schedule-eee11',
@@ -10,6 +10,9 @@ export const firebaseConfig = {
   measurementId: 'G-J44X1FR5X2'
 }
 
-export const initializeApplication = firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig)
 
-export default firebase
+export default (_, inject) => {
+  inject('firebase', firebase)
+  // inject('auth', firebase.auth())
+}
