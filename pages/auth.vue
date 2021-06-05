@@ -15,8 +15,9 @@ export default defineComponent({
       email: '',
       password: ''
     })
-    const login = () => {
-      console.log(auth)
+
+    const login = async () => {
+      // console.log(auth.signInWithEmailAndPassword)
     }
 
     return {
