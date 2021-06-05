@@ -1,11 +1,14 @@
 <template>
-  <div class="m-20">
-    <InputText label="メールアドレス" />
-    <InputText label="パスワード">
-      <Button @click="login">
-        clickMe
-      </Button>
-    </inputtext>
+  <div class="m-24 w-4/5 ml-auto mr-auto">
+    <div class="mt-5 mb-5">
+      <InputText v-model="formState.email" label="メールアドレス" />
+    </div>
+    <div class="mb-5">
+      <InputText v-model="formState.password" label="パスワード" />
+    </div>
+    <div class="text-right">
+      <Button label="clickMe" @click="login" />
+    </div>
   </div>
 </template>
 

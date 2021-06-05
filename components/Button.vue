@@ -1,5 +1,5 @@
 <template>
-  <button class="bg-blue-dark px-4 py-2 font-semibold text-white-default inline-flex items-center space-x-2 rounded text-xs h-8 w-auto" @click="emitClick">
+  <button class="border border-blue-dark bg-blue-dark px-4 py-2 font-semibold text-white-default inline-flex items-center space-x-2 rounded text-xs h-8 w-auto hover:opacity-80" @click="emitClick">
     {{ label }}
   </button>
 </template>
