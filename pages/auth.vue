@@ -8,7 +8,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from '@vue/composition-api'
-import { auth } from '../plugins/firebase'
+// import { auth } from '../plugins/firebase'
+// import { validateRequired } from '../utils/validate'
 export default defineComponent({
   setup () {
     const formState = reactive({
@@ -16,8 +17,9 @@ export default defineComponent({
       password: ''
     })
 
-    const login = async () => {
-      // console.log(auth.signInWithEmailAndPassword)
+    const login = () => {
+      // console.log(validate(formState))
+      // console.log(await auth.signInWithEmailAndPassword)
     }
 
     return {
