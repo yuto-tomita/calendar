@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <button @click="login">
-      clickMe
-    </button>
+  <div class="m-20">
+    <InputText label="メールアドレス" />
+    <InputText label="パスワード">
+      <Button @click="login">
+        clickMe
+      </Button>
+    </inputtext>
   </div>
 </template>
 

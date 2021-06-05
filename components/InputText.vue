@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full">
-    <label class="w-1/6">
-      <div class="text-left">{{ label }}</div>
+    <label class="w-44">
+      <div class="text-left mt-2">{{ label }}</div>
     </label>
     <input v-model="state" class="appearance-none bg-transparent border-b w-full h-8 focus:outline-none focus:border-blue-dark" type="text" placeholder="予定を入力してください">
   </div>
