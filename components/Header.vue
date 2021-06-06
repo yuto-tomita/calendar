@@ -10,13 +10,14 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { auth, provider } from '../plugins/firebase'
+import { authStore } from '../store'
 export default defineComponent({
   setup () {
+    const auth = authStore()
+
     const login = async () => {
       try {
-        const res = await auth.signInWithPopup(provider)
-        console.log(res)
+        await auth.login()
       } catch (e) {
         alert(e)
       }
