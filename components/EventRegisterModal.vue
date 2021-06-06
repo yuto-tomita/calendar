@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from '@vue/composition-api'
+import { defineComponent, PropType, reactive } from '@nuxtjs/composition-api'
 
 interface CalendarObject {
   label: number

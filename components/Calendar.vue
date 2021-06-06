@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from '@vue/composition-api'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import moment from 'moment'
 
 interface CalendarObject {

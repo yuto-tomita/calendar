@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from '@vue/composition-api'
+import { defineComponent, reactive, PropType } from '@nuxtjs/composition-api'
 
 interface DataStructure {
   label: string,
