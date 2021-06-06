@@ -14,9 +14,8 @@ import { auth, provider } from '../plugins/firebase'
 export default defineComponent({
   setup () {
     const login = async () => {
-      const googleProvider = provider
       try {
-        const res = await auth.signInWithPopup(googleProvider)
+        const res = await auth.signInWithPopup(provider)
         console.log(res)
       } catch (e) {
         alert(e)
