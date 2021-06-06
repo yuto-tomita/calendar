@@ -8,7 +8,7 @@
         <div class="font-medium mb-3">
           {{ selectDays.value }}の予定
         </div>
-        <InputText v-model="schedule.event" label="予定" />
+        <InputText v-model="schedule.event" label="予定" placeholder="予定を入力してください" />
 
         <Selectbox v-model="schedule.selectStartHour" :data="canSelectHours" label="開始時間" />
         <Selectbox v-model="schedule.selectEndHour" :data="canSelectHours" label="終了時間" />
