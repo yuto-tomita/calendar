@@ -14,11 +14,12 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.1.0",
     "@nuxtjs/axios": "^5.13.1",
-    "@nuxtjs/composition-api": "^0.23.4",
+    "@nuxtjs/composition-api": "^0.24.3",
     "core-js": "^3.9.1",
     "firebase": "^8.6.3",
     "moment": "^2.29.1",
-    "nuxt": "^2.15.3"
+    "nuxt": "^2.15.3",
+    "pinia": "^0.5.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.4",
