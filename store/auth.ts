@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
 import { auth, provider } from '../plugins/firebase'
 
-interface User {
-  email: string
-  name: string
-}
-
 export const authStore = defineStore({
   id: 'auth',
-  state: ():User => ({
+  state: () => ({
     email: '',
     name: ''
   }),
+  getters: {
+    userInfo (state) {
+      return state
+    }
+  },
   actions: {
     async login () {
       try {

@@ -9,15 +9,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { authStore } from '../store'
 export default defineComponent({
   setup () {
     const auth = authStore()
+    const userName = ref<string>('')
 
     const login = async () => {
       try {
         await auth.login()
+        userName.value = auth.name
       } catch (e) {
         alert(e)
       }
