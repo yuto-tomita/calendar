@@ -10,10 +10,17 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+import { auth, provider } from '../plugins/firebase'
 export default defineComponent({
   setup () {
-    const login = () => {
-      //
+    const login = async () => {
+      const googleProvider = provider
+      try {
+        const res = await auth.signInWithPopup(googleProvider)
+        console.log(res)
+      } catch (e) {
+        alert(e)
+      }
     }
 
     return { login }
