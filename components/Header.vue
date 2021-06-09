@@ -20,7 +20,7 @@ import { authStore } from '../store'
 export default defineComponent({
   setup () {
     const auth = authStore()
-    const userName = ref<string>('')
+    const userName = ref<string | undefined | null>('')
     const successOrFailAlert = ref<string>('')
 
     const login = async () => {

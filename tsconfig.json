@@ -27,7 +27,8 @@
       "@nuxt/types",
       "@nuxtjs/axios",
       "@types/node",
-      "pinia/nuxt/types"
+      "pinia/nuxt/types",
+      "@types/firebase"
     ]
   },
   "exclude": [

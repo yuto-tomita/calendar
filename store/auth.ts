@@ -1,9 +1,15 @@
+/* eslint-disable camelcase */
 import { defineStore } from 'pinia'
 import { auth, provider } from '../plugins/firebase'
 
+interface User {
+  email: string | undefined | null
+  name: string | undefined | null
+}
+
 export const authStore = defineStore({
   id: 'auth',
-  state: () => ({
+  state: (): User => ({
     email: '',
     name: ''
   }),
@@ -17,8 +23,8 @@ export const authStore = defineStore({
       try {
         const res = await auth.signInWithPopup(provider)
 
-        this.email = res.additionalUserInfo.profile.email
-        this.name = res.additionalUserInfo.profile.name
+        this.email = auth.currentUser?.email
+        this.name = auth.currentUser?.displayName
       } catch (e) {
         throw new Error('ログインに失敗 ')
       }
