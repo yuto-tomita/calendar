@@ -28,7 +28,6 @@
       "@nuxtjs/axios",
       "@types/node",
       "pinia/nuxt/types",
-      "@types/firebase"
     ]
   },
   "exclude": [
