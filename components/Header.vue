@@ -5,10 +5,11 @@
         Login
       </div>
     </div>
-    <div v-if="successOrFailAlert && successOrFailAlert === 'ログインに成功しました'" class="bg-blue-light border-t border-b border-blue-dark px-4 py-3 absolute top-10 w-4/6">
-      <div class="text-sm text-gray-dark">
-        ログインに成功しました
-      </div>
+    <div v-if="successOrFailAlert && successOrFailAlert === 'ログインに成功しました'">
+      <Alert :message="successOrFailAlert" :status="true" />
+    </div>
+    <div v-else-if="successOrFailAlert && successOrFailAlert === 'ログインに失敗しました'">
+      <Alert :message="successOrFailAlert" :status="false" />
     </div>
   </header>
 </template>
