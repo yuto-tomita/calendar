@@ -1,9 +1,9 @@
 <template>
   <div
-    class=" border-t border-b  px-4 py-3 w-4/6"
+    class=" border-t border-b bg-opacity-40 px-4 py-3 w-4/6"
     :class="{
-      'bg-blue-light border-blue-dark': status,
-      'bg-red-default border-red-default': !status
+      'bg-blue-light border-blue-dark ': status,
+      'bg-red-light border-red-dark': !status
     }"
   >
     <div class="text-sm">
