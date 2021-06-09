@@ -21,7 +21,7 @@ export const authStore = defineStore({
   actions: {
     async login () {
       try {
-        const res = await auth.signInWithPopup(provider)
+        await auth.signInWithPopup(provider)
 
         this.email = auth.currentUser?.email
         this.name = auth.currentUser?.displayName
