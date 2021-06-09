@@ -5,6 +5,11 @@
         Login
       </div>
     </div>
+    <div v-if="successOrFailAlert && successOrFailAlert === 'ログインに成功しました'" class="bg-blue-light border-t border-b border-blue-dark px-4 py-3 absolute top-10 w-4/6">
+      <div class="text-sm text-gray-dark">
+        ログインに成功しました
+      </div>
+    </div>
   </header>
 </template>
 
@@ -15,17 +20,33 @@ export default defineComponent({
   setup () {
     const auth = authStore()
     const userName = ref<string>('')
+    const successOrFailAlert = ref<string>('')
 
     const login = async () => {
       try {
         await auth.login()
         userName.value = auth.name
+        await displayAlert('ログインに成功しました')
       } catch (e) {
-        alert(e)
+        await displayAlert('ログインに失敗しました')
       }
     }
 
-    return { login }
+    async function displayAlert (message: string): Promise<void> {
+      successOrFailAlert.value = message
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 3000)
+      })
+
+      successOrFailAlert.value = ''
+    }
+
+    return {
+      login,
+      userName,
+      successOrFailAlert
+    }
   }
 })
 </script>
