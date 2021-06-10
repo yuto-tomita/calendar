@@ -17,6 +17,7 @@
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { authStore } from '../store'
+// import { handleAuthClick } from '../plugins/calendar'
 export default defineComponent({
   setup () {
     const auth = authStore()
