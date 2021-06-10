@@ -18,6 +18,7 @@
     "@types/firebase": "^3.2.1",
     "core-js": "^3.9.1",
     "firebase": "^8.6.3",
+    "googleapis": "39",
     "moment": "^2.29.1",
     "nuxt": "^2.15.3",
     "pinia": "^0.5.2"
