@@ -90,3 +90,4 @@ sw.*
 *.swp
 
 /service_account.json
+/store/token.ts
