@@ -26,10 +26,10 @@ export default defineComponent({
 
     const login = async () => {
       try {
-        console.log(connectApi())
-        // await connectApi()
+        await auth.login()
         userName.value = auth.name
         await displayAlert('ログインに成功しました')
+        connectApi()
       } catch (e) {
         await displayAlert('ログインに失敗しました')
       }
