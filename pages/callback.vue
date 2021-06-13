@@ -1,8 +1,6 @@
-import { defineComponent } from "@nuxtjs/composition-api";
-
 <template>
   <div>
-    <p>トップページに遷移しない場合、下のリンクをクリックしてください</p>
+    <p>hoge</p>
   </div>
 </template>
 
@@ -15,15 +13,14 @@ export default defineComponent({
   setup () {
     const route = useRoute()
     const store = tokenStore()
-
     getAccessToken()
 
     async function getAccessToken () {
       try {
         const code = computed(() => route.value.query)
-  
+
         if (typeof code.value.code === 'string') {
-          store.getToken(code.value.code)
+          await store.getToken(code.value.code)
         }
       } catch (e) {
         console.log(e)
@@ -31,4 +28,4 @@ export default defineComponent({
     }
   }
 })
-</script
+</script>
