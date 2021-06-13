@@ -7,7 +7,7 @@ import { defineComponent } from "@nuxtjs/composition-api";
 </template>
 
 <script lang="ts">
-import { defineComponent, useRoute, computed } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, computed, useRouter } from '@nuxtjs/composition-api'
 import { calendarApi } from '../store'
 
 export default defineComponent({
@@ -17,7 +17,9 @@ export default defineComponent({
 
     const code = computed(() => route.value.query.code)
     api.saveCode(code)
-    console.log(api.code)
+
+    const router = useRouter()
+    router.push('/')
   }
 })
 </script>
