@@ -4,6 +4,9 @@
       <div class="absolute bottom-0 font-bold text-gray-dark cursor-pointer hover:opacity-30" @click="login">
         Login
       </div>
+      <div v-if="isTopPage" class="absolute bottom-0 left-7 font-bold text-gray-dark cursor-pointer hover:opacity-30" @click="home">
+        Home
+      </div>
     </div>
     <div v-if="successOrFailAlert && successOrFailAlert === 'ログインに成功しました'">
       <Alert :message="successOrFailAlert" :status="true" />
@@ -15,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRouter, useRoute, computed } from '@nuxtjs/composition-api'
 import { authStore } from '../store'
 import { connectApi } from '../plugins/calendar'
 export default defineComponent({
@@ -23,6 +26,8 @@ export default defineComponent({
     const auth = authStore()
     const userName = ref<string | undefined | null>('')
     const successOrFailAlert = ref<string>('')
+    const router = useRouter()
+    const route = useRoute()
 
     const login = async () => {
       try {
@@ -33,6 +38,9 @@ export default defineComponent({
         console.log(e)
       }
     }
+
+    const isTopPage = computed(() => route.value.path !== '/')
+    const home = () => router.push('/')
 
     // async function displayAlert (message: string): Promise<void> {
     //   successOrFailAlert.value = message
@@ -47,7 +55,9 @@ export default defineComponent({
     return {
       login,
       userName,
-      successOrFailAlert
+      successOrFailAlert,
+      home,
+      isTopPage
     }
   }
 })
