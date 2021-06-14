@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <Calendar />
-  </div>
+  <Calendar />
 </template>
