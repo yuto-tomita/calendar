@@ -28,22 +28,20 @@ export default defineComponent({
       try {
         await auth.login()
         userName.value = auth.name
-        await displayAlert('ログインに成功しました')
         connectApi()
       } catch (e) {
-        await displayAlert('ログインに失敗しました')
       }
     }
 
-    async function displayAlert (message: string): Promise<void> {
-      successOrFailAlert.value = message
+    // async function displayAlert (message: string): Promise<void> {
+    //   successOrFailAlert.value = message
 
-      await new Promise((resolve) => {
-        setTimeout(resolve, 3000)
-      })
+    //   await new Promise((resolve) => {
+    //     setTimeout(resolve, 3000)
+    //   })
 
-      successOrFailAlert.value = ''
-    }
+    //   successOrFailAlert.value = ''
+    // }
 
     return {
       login,

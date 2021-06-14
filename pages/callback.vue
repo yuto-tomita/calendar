@@ -12,12 +12,11 @@ export default defineComponent({
   setup () {
     const route = useRoute()
     const store = tokenStore()
+    const code = computed(() => route.value.query)
     getAccessToken()
 
     async function getAccessToken () {
       try {
-        const code = computed(() => route.value.query)
-
         if (typeof code.value.code === 'string') {
           await store.getAccessToken(code.value.code)
         }
