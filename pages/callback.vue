@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import { defineComponent, useRoute, computed } from '@nuxtjs/composition-api'
-import axios from 'axios'
 import { tokenStore } from '../store'
 
 export default defineComponent({
@@ -20,7 +19,7 @@ export default defineComponent({
         const code = computed(() => route.value.query)
 
         if (typeof code.value.code === 'string') {
-          await store.getToken(code.value.code)
+          await store.getAccessToken(code.value.code)
         }
       } catch (e) {
         console.log(e)
