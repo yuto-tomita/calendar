@@ -1,7 +1,7 @@
 <template>
   <header class="h-14 shadow relative">
     <div class="flex flex-row-reverse mr-20">
-      <div class="absolute bottom-0 font-bold text-gray-dark cursor-pointer hover:opacity-30" @click="login">
+      <div v-if="isLogin" class="absolute bottom-0 font-bold text-gray-dark cursor-pointer hover:opacity-30" @click="login">
         Login
       </div>
       <div v-if="isTopPage" class="absolute bottom-0 left-7 font-bold text-gray-dark cursor-pointer hover:opacity-30" @click="home">
@@ -19,11 +19,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, useRouter, useRoute, computed } from '@nuxtjs/composition-api'
-import { authStore } from '../store'
+import { authStore, tokenStore } from '../store'
 import { connectApi } from '../plugins/calendar'
 export default defineComponent({
   setup () {
     const auth = authStore()
+    const token = tokenStore()
     const userName = ref<string | undefined | null>('')
     const successOrFailAlert = ref<string>('')
     const router = useRouter()
@@ -42,6 +43,8 @@ export default defineComponent({
     const isTopPage = computed(() => route.value.path !== '/')
     const home = () => router.push('/')
 
+    const isLogin = computed(() => token.accessToken.length === 0)
+
     // async function displayAlert (message: string): Promise<void> {
     //   successOrFailAlert.value = message
 
@@ -57,7 +60,8 @@ export default defineComponent({
       userName,
       successOrFailAlert,
       home,
-      isTopPage
+      isTopPage,
+      isLogin
     }
   }
 })
