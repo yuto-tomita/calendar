@@ -30,6 +30,7 @@ export default defineComponent({
         userName.value = auth.name
         connectApi()
       } catch (e) {
+        console.log(e)
       }
     }
 
