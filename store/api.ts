@@ -38,12 +38,21 @@ interface State {
   calendarList: CalendarList[]
 }
 
+type Schedule = Pick<CalendarList, 'summary' | 'created' | 'id' | 'start'>
+
 export const apiStore = defineStore({
   id: 'api',
   state: (): State => ({ calendarList: [] }),
   getters: {
-    returnCalendarList (state) {
-      return state.calendarList
+    returnCalendarList (state): Schedule[] {
+      return state.calendarList.map((val: CalendarList): Schedule => {
+        return {
+          summary: val.summary,
+          created: val.created,
+          id: val.id,
+          start: val.start
+        }
+      })
     }
   },
   actions: {
@@ -55,7 +64,6 @@ export const apiStore = defineStore({
             data: {}
           })
         this.calendarList = res.data.items
-        console.log(this.calendarList)
       } catch (e) {
         console.log(e)
       }
