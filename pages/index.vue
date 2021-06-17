@@ -6,12 +6,13 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { tokenStore, apiStore } from '../store'
+import { Schedule } from '../store/type'
 export default defineComponent({
   setup () {
     const token = tokenStore()
     const api = apiStore()
 
-    const calendarList = async (): Promise<void> => {
+    const calendarList = async (): Promise<Schedule[] | undefined> => {
       if (token.accessToken.length) {
         await api.getCalendarList(token.accessToken)
         return api.returnCalendarList
