@@ -19,8 +19,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, useRouter, useRoute, computed } from '@nuxtjs/composition-api'
-import { authStore, tokenStore } from '../store'
-import { connectApi } from '../plugins/calendar'
+import { authStore, tokenStore } from '../../store'
+import { connectApi } from '../../plugins/calendar'
 export default defineComponent({
   setup () {
     const auth = authStore()
