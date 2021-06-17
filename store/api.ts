@@ -1,48 +1,10 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-
-interface CalendarList {
-  created: string
-  creator: {
-    email: string
-    self: boolean
-  }
-  end: {
-    dateTime: string
-    timeZone: string
-  }
-  etag: string
-  eventType: string
-  htmlLink: string
-  iCaUID: string
-  id: string
-  kind: string
-  organizer: {
-    email: string
-    self: boolean
-  }
-  reminders: {
-    useDefault: boolean
-  }
-  sequence: number
-  start: {
-    dateTime: string
-    timeZone: string
-  }
-  status: string
-  summary: string
-  updated: string
-}
-
-interface State {
-  calendarList: CalendarList[]
-}
-
-type Schedule = Pick<CalendarList, 'summary' | 'created' | 'id' | 'start'>
+import { CalendarList, ApiState, Schedule } from './type'
 
 export const apiStore = defineStore({
   id: 'api',
-  state: (): State => ({ calendarList: [] }),
+  state: (): ApiState => ({ calendarList: [] }),
   getters: {
     returnCalendarList (state): Schedule[] {
       return state.calendarList.map((val: CalendarList): Schedule => {

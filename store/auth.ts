@@ -1,20 +1,16 @@
 /* eslint-disable camelcase */
 import { defineStore } from 'pinia'
 import { auth, provider } from '../plugins/firebase'
-
-interface User {
-  email: string | undefined | null
-  name: string | undefined | null
-}
+import { UserState } from './type'
 
 export const authStore = defineStore({
   id: 'auth',
-  state: (): User => ({
+  state: (): UserState => ({
     email: '',
     name: ''
   }),
   getters: {
-    userInfo (state) {
+    userInfo (state): UserState {
       return state
     }
   },

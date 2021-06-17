@@ -1,6 +1,6 @@
 
 <template>
-  <Calendar />
+  <Calendar calendar-list="calendarList" />
 </template>
 
 <script lang="ts">
@@ -11,9 +11,14 @@ export default defineComponent({
     const token = tokenStore()
     const api = apiStore()
 
-    if (token.accessToken.length) {
-      api.getCalendarList(token.accessToken)
+    const calendarList = async (): Promise<void> => {
+      if (token.accessToken.length) {
+        await api.getCalendarList(token.accessToken)
+        return api.returnCalendarList
+      }
     }
+
+    return { calendarList }
   }
 })
 </script>
