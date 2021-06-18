@@ -51,7 +51,8 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import moment from 'moment'
-
+import MonthEvent from '@/components/Event/MonthEvent.vue'
+import EventRegisterModal from '@/components/Event/EventRegisterModal.vue'
 interface CalendarObject {
   label: number
   value: string
@@ -70,6 +71,7 @@ interface CalendarState {
 }
 
 export default defineComponent({
+  components: { MonthEvent, EventRegisterModal },
   setup () {
     const weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const monthState = ref<string>(moment().format('YYYY-MM'))

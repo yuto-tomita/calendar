@@ -17,8 +17,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import Button from '@/components/Form/Button.vue'
 export default defineComponent({
   emit: ['closeDialog'],
+  components: { Button },
   setup (_, { emit }) {
     const closeDialog = () => emit('closeDialog')
     return {

@@ -23,6 +23,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, reactive } from '@nuxtjs/composition-api'
+import Button from '@/components/Form/Button.vue'
+import Selectbox from '@/components/Form/Selectbox.vue'
+import InputText from '@/components/Form/InputText.vue'
 
 interface CalendarObject {
   label: number
@@ -42,6 +45,7 @@ interface Schedule {
 }
 
 export default defineComponent({
+  components: { Button, Selectbox, InputText },
   props: {
     selectDays: {
       type: Object as PropType<CalendarObject>,
