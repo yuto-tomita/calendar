@@ -75,7 +75,7 @@ export default defineComponent({
   components: { MonthEvent, EventRegisterModal },
   props: {
     calendarList: {
-      type: Array as PropType<Schedule[]>,
+      type: Array as PropType<DaySchedule[]>,
       // eslint-disable-next-line vue/require-valid-default-prop
       default: [],
       required: false
