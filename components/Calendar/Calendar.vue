@@ -77,7 +77,7 @@ export default defineComponent({
     calendarList: {
       type: Array as PropType<DaySchedule[]>,
       // eslint-disable-next-line vue/require-valid-default-prop
-      default: [],
+      default: () => [],
       required: false
     }
   },
