@@ -1,18 +1,19 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { CalendarList, ApiState, Schedule } from './type'
+import { CalendarList, ApiState, DaySchedule } from './type'
 
 export const apiStore = defineStore({
   id: 'api',
   state: (): ApiState => ({ calendarList: [] }),
   getters: {
-    returnCalendarList (state): Schedule[] {
-      return state.calendarList.map((val: CalendarList): Schedule => {
+    returnCalendarList (state): DaySchedule[] {
+      return state.calendarList.map((val: CalendarList): DaySchedule => {
         return {
           summary: val.summary,
           created: val.created,
           id: val.id,
-          start: val.start
+          start: val.start,
+          end: val.end
         }
       })
     }
