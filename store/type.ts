@@ -35,7 +35,7 @@ export interface ApiState {
   calendarList: CalendarList[]
 }
 
-export type Schedule = Pick<CalendarList, 'summary' | 'created' | 'id' | 'start'>
+export type DaySchedule = Pick<CalendarList, 'summary' | 'created' | 'id' | 'start' | 'end'>
 
 export interface UserState {
   email: string | null | undefined

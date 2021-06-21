@@ -49,7 +49,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref, PropType } from '@nuxtjs/composition-api'
+import { DaySchedule } from '@/store/type'
 import moment from 'moment'
 import MonthEvent from '@/components/Event/MonthEvent.vue'
 import EventRegisterModal from '@/components/Event/EventRegisterModal.vue'
@@ -72,6 +73,14 @@ interface CalendarState {
 
 export default defineComponent({
   components: { MonthEvent, EventRegisterModal },
+  props: {
+    calendarList: {
+      type: Array as PropType<Schedule[]>,
+      // eslint-disable-next-line vue/require-valid-default-prop
+      default: [],
+      required: false
+    }
+  },
   setup () {
     const weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const monthState = ref<string>(moment().format('YYYY-MM'))
