@@ -54,6 +54,7 @@ import { DaySchedule } from '@/store/type'
 import moment from 'moment'
 import MonthEvent from '@/components/Event/MonthEvent.vue'
 import EventRegisterModal from '@/components/Event/EventRegisterModal.vue'
+import { tokenStore, apiStore } from '@/store'
 interface CalendarObject {
   label: number
   value: string
@@ -76,12 +77,13 @@ export default defineComponent({
   props: {
     calendarList: {
       type: Array as PropType<DaySchedule[]>,
-      // eslint-disable-next-line vue/require-valid-default-prop
       default: () => [],
       required: false
     }
   },
-  setup () {
+  setup (props) {
+    const api = apiStore()
+    const token = tokenStore()
     const weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     const monthState = ref<string>(moment().format('YYYY-MM'))
     const selectStatus = ref<number>(2)
@@ -122,6 +124,16 @@ export default defineComponent({
     )
     const isDialog = ref(false)
     const today = moment().format('MM-DD')
+
+    addScheduleFromAPI()
+
+    async function addScheduleFromAPI (): Promise<void> {
+      if (token.accessToken.length) {
+        await api.getCalendarList(token.accessToken)
+        console.log(api.returnCalendarList)
+        // calendarList.value = api.returnCalendarList
+      }
+    }
 
     const incrementMonth = (): void => {
       monthState.value = moment(monthState.value).add(1, 'M').format('YYYY-MM')
