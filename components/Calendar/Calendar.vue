@@ -35,7 +35,7 @@
           </span>
         </div>
         <div v-for="(event, eventIndex) in schedule" :key="event.event" @click="openDialog(eventIndex)">
-          <MonthEvent v-if="event.date === day.value" :schedule="event" />
+          <MonthEvent v-if="event.start.dateTime === day.value" :schedule="event" />
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, PropType } from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import { DaySchedule } from '@/store/type'
 import moment from 'moment'
 import MonthEvent from '@/components/Event/MonthEvent.vue'
@@ -74,14 +74,7 @@ interface CalendarState {
 
 export default defineComponent({
   components: { MonthEvent, EventRegisterModal },
-  props: {
-    calendarList: {
-      type: Array as PropType<DaySchedule[]>,
-      default: () => [],
-      required: false
-    }
-  },
-  setup (props) {
+  setup () {
     const api = apiStore()
     const token = tokenStore()
     const weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -106,22 +99,7 @@ export default defineComponent({
         value: 2
       }
     ]
-    const schedule = ref<Schedule[]>(
-      [
-        {
-          date: moment().format('YYYY-MM-DD'),
-          startHour: 13,
-          endHour: 15,
-          event: 'ショッピング'
-        },
-        {
-          date: moment().format('YYYY-MM-DD'),
-          startHour: 15,
-          endHour: 17,
-          event: 'Meeting'
-        }
-      ]
-    )
+    const schedule = ref<DaySchedule[]>([])
     const isDialog = ref(false)
     const today = moment().format('MM-DD')
 
@@ -130,8 +108,20 @@ export default defineComponent({
     async function addScheduleFromAPI (): Promise<void> {
       if (token.accessToken.length) {
         await api.getCalendarList(token.accessToken)
-        console.log(api.returnCalendarList)
-        // calendarList.value = api.returnCalendarList
+        const scheduleList = api.returnCalendarList
+
+        schedule.value = scheduleList.map((val) => {
+          return {
+            summary: val.summary,
+            created: val.created,
+            id: val.id,
+            start: {
+              dateTime: moment(val.start.dateTime).format('YYYY-MM-DD'),
+              timeZone: val.start.timeZone
+            },
+            end: val.end
+          }
+        })
       }
     }
 
