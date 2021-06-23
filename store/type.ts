@@ -23,7 +23,8 @@ export interface CalendarList {
   }
   sequence: number
   start: {
-    dateTime: string
+    dateTime?: string
+    date?: string
     timeZone: string
   }
   status: string
