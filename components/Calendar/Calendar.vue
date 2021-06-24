@@ -116,7 +116,7 @@ export default defineComponent({
             created: val.created,
             id: val.id,
             start: {
-              dateTime: moment(val.start.dateTime).format('YYYY-MM-DD'),
+              dateTime: val.start?.dateTime ? moment(val.start.dateTime).format('YYYY-MM-DD') : moment(val.start.date).format('YYYY-MM-DD'),
               timeZone: val.start.timeZone
             },
             end: val.end
